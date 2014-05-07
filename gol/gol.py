@@ -23,6 +23,61 @@ def display():
         current_column = current_position[1] - 9
     print('done')
 
+def editmodedisplay():
+    print(20 * '\n')
+    print('Edit Mode\tGeneration:', generation)
+    current_row = current_position[0] - 9
+    current_column = current_position[1] - 9
+    while current_row < current_position[0] + 10:
+        pstring = ''
+        while current_column < current_position[1] + 10:
+            if (current_row, current_column) in alive:
+                if (current_row, current_column) == cursor:
+                    pstring += 'X'
+                    current_column += 1
+                else:
+                    pstring = pstring + '#'
+                    current_column = current_column + 1
+            else:
+                if (current_row, current_column) == cursor:
+                    pstring += 'x'
+                    current_column += 1
+                else:
+                    pstring = pstring + '-'
+                    current_column = current_column + 1
+        print(pstring)
+        current_row = current_row + 1
+        current_column = current_position[1] - 9
+    print('done')
+
+def editmode():
+    global cursor
+    cursor = current_position
+    command = 'editing'
+    editmodedisplay()
+    while command != 'quit':
+        command = input("Enter a command: ")
+        if command == 'w':
+            cursor = (cursor[0] - 1, cursor[1])
+            editmodedisplay()
+        elif command == 'a':
+            cursor = (cursor[0], cursor[1] - 1)
+            editmodedisplay()
+        elif command == 's':
+            cursor = (cursor[0] + 1, cursor[1])
+            editmodedisplay()
+        elif command == 'd':
+            cursor = (cursor[0], cursor[1] + 1)
+            editmodedisplay()
+        elif command == 't':
+            if cursor in alive:
+                alive.remove(cursor)
+                editmodedisplay()
+            else:
+                alive.append(cursor)
+                editmodedisplay()
+    main('editing done')
+
 def countn(cell):
     northwest = (cell[0] - 1, cell[1] - 1)
     north = (cell[0] - 1, cell[1])
@@ -100,5 +155,7 @@ def main(command):
             display
         elif command == '':
             nextgen()
+        elif command == 'e':
+            editmode()
 
-main('work dammit')
+editmode()

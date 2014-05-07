@@ -6,13 +6,12 @@ generation = 0
 
 def display():
     print(20 * '\n')
-    print('Generation:', generation)
-    print('Population:', len(alive))
-    current_row = current_position[0] - 7
-    current_column = current_position[1] - 7
-    while current_row < current_position[0] + 8:
+    print('Generation:', generation, 'Population:', len(alive))
+    current_row = current_position[0] - 9
+    current_column = current_position[1] - 9
+    while current_row < current_position[0] + 10:
         pstring = ''
-        while current_column < current_position[1] + 8:
+        while current_column < current_position[1] + 10:
             if (current_row, current_column) in alive:
                 pstring = pstring + '#'
                 current_column = current_column + 1
@@ -21,7 +20,7 @@ def display():
                 current_column = current_column + 1
         print(pstring)
         current_row = current_row + 1
-        current_column = current_position[1] - 7
+        current_column = current_position[1] - 9
     print('done')
 
 def countn(cell):

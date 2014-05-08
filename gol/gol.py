@@ -1,4 +1,4 @@
-alive = [(0, 0), (0, -1),(-1, 0), (1, 0), (-1, 1)]
+alive = []
 newborns = []
 still_alive = []
 current_position = (0, 0)
@@ -33,14 +33,14 @@ def editmodedisplay():
         while current_column < current_position[1] + 10:
             if (current_row, current_column) in alive:
                 if (current_row, current_column) == cursor:
-                    pstring += 'X'
+                    pstring += 'A'
                     current_column += 1
                 else:
                     pstring = pstring + '#'
                     current_column = current_column + 1
             else:
                 if (current_row, current_column) == cursor:
-                    pstring += 'x'
+                    pstring += 'D'
                     current_column += 1
                 else:
                     pstring = pstring + '-'
@@ -51,11 +51,12 @@ def editmodedisplay():
     print('done')
 
 def editmode():
+    global generation
     global cursor
     cursor = current_position
     command = 'editing'
     editmodedisplay()
-    while command != 'quit':
+    while command != 'e':
         command = input("Enter a command: ")
         if command == 'w':
             cursor = (cursor[0] - 1, cursor[1])
@@ -76,6 +77,12 @@ def editmode():
             else:
                 alive.append(cursor)
                 editmodedisplay()
+        elif command == 'reset':
+            generation = 0
+            alive.clear()
+            editmodedisplay()
+        else:
+            editmodedisplay()
     main('editing done')
 
 def countn(cell):

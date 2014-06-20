@@ -5,15 +5,10 @@ whitespace = "\t \n"
 isWord = False
 wordcount = 0
 for char in document:
-    if isWord:
-        if char in whitespace:
-            isWord = False
-        else:
-            continue
+    if isWord and char in whitespace:
+        isWord = False
     else:
         if char not in whitespace:
             wordcount += 1
             isWord = True
-        else:
-            continue
 print(wordcount)
